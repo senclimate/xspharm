@@ -38,6 +38,7 @@ extensions = [
     'sphinx.ext.napoleon',
     'sphinx.ext.viewcode',  # Adds links to the source code
     'sphinx.ext.todo',      # If you want to use todo:: directives
+    'sphinx_rtd_theme',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
