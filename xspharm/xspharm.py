@@ -4,17 +4,43 @@ from spharm import Spharmt
 
 class xspharm:
     """
-    xarray interface to spherical harmonic transform
-        based on pyspharm https://github.com/jswhit/pyspharm/tree/master
+    Xarray interface to spherical harmonic transforms using pyspharm.
+
+    Attributes:
+        nlat (int): Number of latitude points.
+        nlon (int): Number of longitude points.
+        fvor (xarray DataArray) : planetary vorticity 
+        s (Spharmt): Spharmt object for spherical harmonic operations.
+
+    Methods:
+        truncate: Truncate a data variable or entire dataset to a specific wavenumber.
+        exp_taper: Apply tapering to spherical harmonic coefficients.
+        uv2sfvp: Convert zonal and meridional wind components to streamfunction and velocity potential.
+        uv2vordiv: Convert zonal and meridional wind components to vorticity and divergence.
+        uv2absvor: Convert zonal and meridional wind components to absolute vorticity.
+        sf2uv: Convert streamfunction to rotational wind components.
+        vp2uv: Convert velocity potential to divergent wind components.
+        sfvp2uv: Convert streamfunction and velocity potential to zonal and meridional wind components.
     """
 
     def __init__(self, grid_ds,
-                 gridtype='regular',  # Fixed typo from `ridtype` to `gridtype`
+                 gridtype='regular',
                  rsphere=6.3712e6, 
                  omega=7.292e-5, 
                  legfunc='stored'):
+        """
+        Initialize the XSpharm class with the given dataset and spherical harmonic transform parameters.
+
+        Args:
+            grid_ds (xarray.Dataset): Dataset containing the grid information.
+            gridtype (str): Type of grid, either 'regular' or 'gaussian'.
+            rsphere (float): Radius of the sphere, defaults to Earth's radius in meters.
+            omega (float): Rotation rate of the planet, defaults to Earth's rotation rate.
+            legfunc (str): Legendre function computation method, either 'stored' or 'computed'.
+        """
         self.nlat = len(grid_ds['lat'])
         self.nlon = len(grid_ds['lon'])
+        self.fvor = 2. * omega * np.sin(np.deg2rad(grid_ds['lat'])) 
         self.s = Spharmt(self.nlon, self.nlat, gridtype=gridtype, rsphere=rsphere, legfunc=legfunc)
 
     def truncate(self, ds_or_var, ntrunc=None):
@@ -112,7 +138,7 @@ class xspharm:
 
         psi_ds = _transpose_from_spharm(u_data.copy(data=psi_data), other_dims)
         chi_ds = _transpose_from_spharm(u_data.copy(data=chi_data), other_dims)
-        psi_ds.attrs['long_name'] = 'Streamfunction'
+        psi_ds.attrs['long_name'] = 'streamfunction'
         psi_ds.attrs['units'] = 'm**2/s'
         chi_ds.attrs['long_name'] = 'velocity potential'
         chi_ds.attrs['units'] = 'm**2/s'
@@ -141,6 +167,31 @@ class xspharm:
         div_ds.attrs['long_name'] = 'Divergence'
         div_ds.attrs['units'] = '1/s'
         return xr.Dataset({'vor': vor_ds, 'div': div_ds})
+
+    def uv2absvor(self, u_ds, v_ds, ntrunc=None):
+        """
+        Computes the absolute vorticity via spherical harmonics, given the u and v wind components
+        
+        Inputs:
+        u, v: zonal and meridional winds
+        ntrunc: Truncation limit (triangular truncation) for the spherical harmonic computation.
+
+        Returns:
+        vor, div
+            The vorticity and divergence respectively.
+        """
+        other_dims = _get_other_dims(u_ds)
+        u_data = _transpose_to_spharm(u_ds)
+        v_data = _transpose_to_spharm(v_ds)
+
+        vor_spec, _ = self.s.getvrtdivspec(u_data.values, v_data.values, ntrunc=ntrunc)
+        vor_ds = _transpose_from_spharm( u_data.copy(data=self.s.spectogrd(vor_spec)), other_dims)
+        
+        # add planetary vorticity (Coriolis effect) 
+        vor_ds = vor_ds + self.fvor
+        vor_ds.attrs['long_name'] = 'absolute vorticity'
+        vor_ds.attrs['units'] = '1/s'
+        return vor_ds
 
     def sf2uv(self, sf_ds, ntrunc=None):
         """Computes the rotational wind components via spherical harmonics, given an array containing streamfunction
@@ -188,6 +239,35 @@ class xspharm:
         v_ds.attrs['units'] = 'm/s'
         return xr.Dataset({'u_div': u_ds, 'v_div': v_ds})
 
+    def sfvp2uv(self, sf_ds, vp_ds, ntrunc=None):
+        """
+        Computes the wind components via spherical harmonics, given streamfunction and velocity potential.
+        
+        Inputs:
+        sf_ds: streamfunction
+        vp_ds: velocity potential
+        ntrunc: Truncation limit (triangular truncation) for the spherical harmonic computation.
+        
+        Returns:
+            u, v: zonal and meridional winds
+        """
+        other_dims = _get_other_dims(sf_ds)
+        sf_data = _transpose_to_spharm(sf_ds)
+        vp_data = _transpose_to_spharm(vp_ds)
+
+        psi_spec = self.s.grdtospec(sf_data, ntrunc=ntrunc)
+        vpsi_data, upsi_data = self.s.getgrad(psi_spec)
+        chi_spec = self.s.grdtospec(vp_data, ntrunc=ntrunc)
+        udiv_data, vdiv_data = self.s.getgrad(chi_spec)
+
+        u_ds = _transpose_from_spharm( sf_data.copy(data=udiv_data-upsi_data), other_dims)
+        v_ds = _transpose_from_spharm( sf_data.copy(data=vdiv_data+vpsi_data), other_dims)
+        u_ds.attrs['long_name'] = 'U wind'
+        u_ds.attrs['units'] = 'm/s'
+        v_ds.attrs['long_name'] = 'V wind'
+        v_ds.attrs['units'] = 'm/s'
+        return xr.Dataset({'u': u_ds, 'v': v_ds})
+
 
 def _get_other_dims(input_data):
     '''
@@ -199,7 +279,9 @@ def _get_other_dims(input_data):
 
 
 def _transpose_to_spharm(input_data):
-    """Transpose data to fit spharm's expected layout: [nlat, nlon, nt]."""
+    """
+    Transpose data to fit spharm's expected layout: [nlat, nlon, nt].
+    """
     other_dims = _get_other_dims(input_data)
 
     if len(other_dims) == 0:
@@ -213,8 +295,9 @@ def _transpose_to_spharm(input_data):
 
 
 def _transpose_from_spharm(sp_data, other_dims):
-    """Transpose data back from spharm's layout."""
-
+    """
+    Transpose data back from spharm's layout.
+    """
     if len(other_dims) == 0:
         return sp_data
     elif len(other_dims) == 1:
