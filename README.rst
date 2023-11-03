@@ -35,8 +35,10 @@ Xspharm provides a suite of methods to manipulate and transform geospatial datas
 Credits
 -------
 
-Xspharm owes gratitude to Jeff Whitaker and Andrew Dawson for their pioneering work on the `pyspharm` and `windspharm` libraries, which form the foundation of this package's capabilities.
+Special thanks to `Jeff Whitaker`_ for sharing the `pyspharm`_ library, which forms the foundation of this package's capabilities; and to `Andrew Dawson`_ for inspiring with the `windspharm`_ library.
 
-- `pyspharm`: Developed by `Jeff Whitaker <https://github.com/jswhit>`.
-- `windspharm`: Created by `Andrew Dawson <https://github.com/ajdawson>`.
+.. _Jeff Whitaker: https://github.com/jswhit
+.. _Andrew Dawson: https://github.com/ajdawson
+.. _pyspharm: https://github.com/jswhit/pyspharm
+.. _windspharm: https://github.com/ajdawson/windspharm
 
