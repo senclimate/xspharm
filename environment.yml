@@ -6,3 +6,4 @@ dependencies:
   - numpy
   - xarray
   - pyspharm
+  - sphinx_rtd_theme
