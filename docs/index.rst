@@ -1,4 +1,4 @@
-Welcome to Xspharm's documentation!
+Welcome to xspharm's documentation!
 ======================================
 
 .. toctree::

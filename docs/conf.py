@@ -21,7 +21,7 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath('..'))
 
-import xspharm
+# import xspharm
 
 # -- General configuration ---------------------------------------------
 
@@ -46,7 +46,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'Xspharm'
+project = 'xspharm'
 copyright = "2023, Sen Zhao"
 author = "Sen Zhao"
 
@@ -128,7 +128,7 @@ latex_elements = {
 # [howto, manual, or own class]).
 latex_documents = [
     (master_doc, 'xspharm.tex',
-     'Xspharm Documentation',
+     'xspharm Documentation',
      'Sen Zhao', 'manual'),
 ]
 
@@ -139,7 +139,7 @@ latex_documents = [
 # (source start file, name, description, authors, manual section).
 man_pages = [
     (master_doc, 'xspharm',
-     'Xspharm Documentation',
+     'xspharm Documentation',
      [author], 1)
 ]
 
@@ -151,7 +151,7 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
     (master_doc, 'xspharm',
-     'Xspharm Documentation',
+     'xspharm Documentation',
      author,
      'xspharm',
      'One line description of project.',
