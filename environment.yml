@@ -1,4 +1,4 @@
-name: myenv
+name: virtualenv
 channels:
   - conda-forge
   - defaults
