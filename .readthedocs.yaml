@@ -30,12 +30,11 @@ sphinx:
 # See https://docs.readthedocs.io/en/stable/guides/reproducible-builds.html
 python:
    install:
+   - requirements: docs/requirements.txt
    - method: pip
      path: .
 
-build:
-  jobs:
-    pre_install:
-      - python -m pip install numpy
-    install:
-      - python -m pip install -r docs/requirements.txt
+# If RTD allows pre-install hooks, this would be the syntax:
+# Note that this feature may not be available or may require a specific setup.
+hooks:
+  pre_build: "pip install numpy"
