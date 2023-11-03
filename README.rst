@@ -3,7 +3,7 @@
 =================
 
 .. image:: https://img.shields.io/pypi/v/xspharm.svg
-    :target: https://pypi.python.org/pypi/xspharm
+    :target: https://pypi.org/project/xspharm
     :alt: PyPI Version
 
 .. image:: https://readthedocs.org/projects/xspharm/badge/?version=latest
