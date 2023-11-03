@@ -13,15 +13,27 @@
 Overview
 --------
 
-Xspharm is an xarray-compatible library that facilitates spherical harmonic transforms. It leverages the computational efficiency of `pyspharm` and the convenience of `xarray` data structures to provide an intuitive interface for processing geospatial data on a spherical domain.
+`xspharm` is an xarray-compatible library that facilitates spherical harmonic transforms. It leverages the computational efficiency of `pyspharm` and the convenience of `xarray` data structures to provide an intuitive interface for processing geospatial data on a spherical domain.
 
 * **License**: Distributed under the BSD License.
 * **Documentation**: Comprehensive documentation available at https://xspharm.readthedocs.io.
 
+Installation
+--------
+
+To install `xspharm`, run this command in your terminal:
+
+.. code-block:: console
+
+    $ pip install xspharm
+
+This is the preferred method to install xspharm, as it will always install the most recent stable release.
+
+
 Features
 --------
 
-Xspharm provides a suite of methods to manipulate and transform geospatial datasets:
+`xspharm` provides a suite of methods to manipulate and transform geospatial datasets:
 
 - `truncate`: Reduces the resolution of a data variable or an entire dataset to a specified spherical harmonic wavenumber.
 - `exp_taper`: Applies tapering to mitigate the Gibbs phenomenon in spherical harmonic coefficients.
