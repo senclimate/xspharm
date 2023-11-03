@@ -11,7 +11,7 @@
     :alt: Documentation Status
 
 Overview
---------
+------------
 
 `xspharm` is an xarray-compatible library that facilitates spherical harmonic transforms. It leverages the computational efficiency of `pyspharm` and the convenience of `xarray` data structures to provide an intuitive interface for processing geospatial data on a spherical domain.
 
@@ -19,19 +19,19 @@ Overview
 * **Documentation**: Comprehensive documentation available at https://xspharm.readthedocs.io.
 
 Installation
---------
+------------
 
 To install `xspharm`, run this command in your terminal:
 
 .. code-block:: console
 
-    $ pip install xspharm
+    pip install xspharm
 
 This is the preferred method to install xspharm, as it will always install the most recent stable release.
 
 
 Features
---------
+------------
 
 `xspharm` provides a suite of methods to manipulate and transform geospatial datasets:
 
@@ -45,7 +45,7 @@ Features
 - `sfvp2uv`: Integrates streamfunction and velocity potential to produce zonal (`u`) and meridional (`v`) wind components.
 
 Credits
--------
+------------
 
 Special thanks to `Jeff Whitaker`_ for sharing the `pyspharm`_ library, which forms the foundation of this package's capabilities; and to `Andrew Dawson`_ for inspiring with the `windspharm`_ library.
 
