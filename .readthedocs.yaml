@@ -32,12 +32,10 @@ python:
    install:
    - method: pip
      path: .
-    - method: pip
-        extra_requirements:
-            - docs
+
 build:
   jobs:
     pre_install:
       - python -m pip install numpy
     install:
-      - python -m pip install -r requirements.txt
+      - python -m pip install -r docs/requirements.txt
