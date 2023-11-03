@@ -1,0 +1,10 @@
+name: myenv
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - numpy
+  - xarray
+  - pip:
+    - pyspharm==1.0.9
+    # add other pip packages if necessary
