@@ -33,8 +33,3 @@ python:
    - requirements: docs/requirements.txt
    - method: pip
      path: .
-
-# If RTD allows pre-install hooks, this would be the syntax:
-# Note that this feature may not be available or may require a specific setup.
-hooks:
-  pre_build: "pip install numpy"
