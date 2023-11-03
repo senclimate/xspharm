@@ -2,7 +2,7 @@ import numpy as np
 import xarray as xr
 from spharm import Spharmt
 
-class Xspharm:
+class xspharm:
     """
     xarray interface to spherical harmonic transform
         based on pyspharm https://github.com/jswhit/pyspharm/tree/master
