@@ -14,10 +14,13 @@ build:
     # nodejs: "19"
     # rust: "1.64"
     # golang: "1.19"
+
+# Define the documentation build steps
+build:
   jobs:
-    install:
-      - install: "python -m pip install numpy"
-      - install: "python -m pip install -r docs/requirements.txt"
+    pre_install:
+      - python -m pip install numpy
+      - python -m pip install -r docs/requirements.txt
       
 # Build documentation in the "docs/" directory with Sphinx
 sphinx:
