@@ -19,6 +19,11 @@
 #
 import os
 import sys
+import subprocess
+
+# Ensure numpy is installed before proceeding
+subprocess.check_call([sys.executable, '-m', 'pip', 'install', 'numpy'])
+
 sys.path.insert(0, os.path.abspath('..'))
 
 # import xspharm
