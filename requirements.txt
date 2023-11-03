@@ -1,2 +1,2 @@
 numpy>=1.22.1
-pyspharm>=1.0.9
+git+https://github.com/senclimate/pyspharm.git@master#egg=pyspharm
