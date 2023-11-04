@@ -43,7 +43,7 @@ This is the preferred method to install xspharm, as it will always install the m
 Documentation
 -------------
 
-* **Documentation**: Comprehensive documentation available at https://xspharm.readthedocs.io.
+* **Documentation** available at https://xspharm.readthedocs.io.
 
 `xspharm` provides a suite of methods to manipulate and transform geospatial datasets:
 
