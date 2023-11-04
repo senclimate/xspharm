@@ -29,11 +29,6 @@ setup(
         'Programming Language :: Python :: 3.8',
     ],
     description="xarray interface to spherical harmonic transform",
-    entry_points={
-        'console_scripts': [
-            'xspharm=xspharm.cli:main',
-        ],
-    },
     install_requires=requirements,
     license="BSD license",
     long_description=readme + '\n\n' + history,
@@ -44,6 +39,6 @@ setup(
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/senclimate/xspharm',
-    version='0.1.1',
+    version='0.1.2',
     zip_safe=False,
 )

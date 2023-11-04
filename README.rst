@@ -1,6 +1,6 @@
-=================
- Xspharm Package
-=================
+===========================================================
+ xspharm: Xarray Interface for Spherical Harmonic Transform 
+===========================================================
 
 .. image:: https://img.shields.io/pypi/v/xspharm.svg
     :target: https://pypi.python.org/pypi/xspharm
@@ -11,27 +11,39 @@
     :alt: Documentation Status
 
 Overview
-------------
+--------
 
 `xspharm` is an xarray-compatible library that facilitates spherical harmonic transforms. It leverages the computational efficiency of `pyspharm` and the convenience of `xarray` data structures to provide an intuitive interface for processing geospatial data on a spherical domain.
 
-* **License**: Distributed under the BSD License.
-* **Documentation**: Comprehensive documentation available at https://xspharm.readthedocs.io.
 
-Installation
-------------
+Quick Start
+-----------
 
 To install `xspharm`, run this command in your terminal:
 
 .. code-block:: console
 
-    pip install xspharm
+    $ pip install xspharm
 
 This is the preferred method to install xspharm, as it will always install the most recent stable release.
 
 
-Features
-------------
+.. code-block:: python
+
+    from xspharm import xspharm
+    xsp = xspharm(grid_ds, grid_type='regular')
+
+    # convert u anv v to streamfunction and velocity potential
+    sfvp_ds = xsp.uv2sfvp(u_ds, v_ds, ntrunc=24)
+
+    # tri_truncate the fields (can be xarray DataArray or Dataset in same spatial coordinates with grid_ds)
+    trunc_ds = xsp.truncate(field_ds, ntrunc=42)
+
+
+Documentation
+-------------
+
+* **Documentation**: Comprehensive documentation available at https://xspharm.readthedocs.io.
 
 `xspharm` provides a suite of methods to manipulate and transform geospatial datasets:
 
@@ -44,8 +56,8 @@ Features
 - `vp2uv`: Obtains divergent wind components from velocity potential.
 - `sfvp2uv`: Integrates streamfunction and velocity potential to produce zonal (`u`) and meridional (`v`) wind components.
 
-Credits
-------------
+Acknowledgments
+---------------
 
 Special thanks to `Jeff Whitaker`_ for sharing the `pyspharm`_ library, which forms the foundation of this package's capabilities; and to `Andrew Dawson`_ for inspiring with the `windspharm`_ library.
 
@@ -54,3 +66,7 @@ Special thanks to `Jeff Whitaker`_ for sharing the `pyspharm`_ library, which fo
 .. _pyspharm: https://github.com/jswhit/pyspharm
 .. _windspharm: https://github.com/ajdawson/windspharm
 
+
+License
+-------
+Distributed under the BSD License.

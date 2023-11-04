@@ -7,8 +7,8 @@ Welcome to xspharm's documentation!
 
    readme
    installation
-   usage
    modules
+   usage
    contributing
    authors
    history
