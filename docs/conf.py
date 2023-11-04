@@ -21,6 +21,7 @@ import os
 import sys
 
 sys.path.insert(0, os.path.abspath('..'))
+sys.path.insert(0, os.path.abspath('../notebooks'))
 
 import xspharm
 
@@ -38,6 +39,7 @@ extensions = [
     'sphinx.ext.viewcode',  # Adds links to the source code
     'sphinx.ext.todo',      # If you want to use todo:: directives
     'sphinx_rtd_theme',
+    'nbsphinx',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -56,6 +58,9 @@ master_doc = 'index'
 project = 'xspharm'
 copyright = "2023, Sen Zhao"
 author = "Sen Zhao"
+
+# Do not execute the notebooks
+nbsphinx_execute = 'never'
 
 # The version info for the project you're documenting, acts as replacement
 # for |version| and |release|, also used in various other places throughout
@@ -76,7 +81,7 @@ language = None
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This patterns also effect to html_static_path and html_extra_path
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', '**.ipynb_checkpoints']
 
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = 'sphinx'
