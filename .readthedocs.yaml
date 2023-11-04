@@ -17,7 +17,6 @@ build:
 
 conda:
   environment: environment.yml
-  use_mamba: true
       
 # Build documentation in the "docs/" directory with Sphinx
 sphinx:
